@@ -1,0 +1,22 @@
+---
+- name: Setup Nginx on production servers
+  hosts: prod
+  become: yes
+  tasks:
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Start and enable Nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Deploy Static Web Page
+      copy:
+        src: /home/ubuntu/playbooks/index.html
+        dest: /var/www/html/index.html
